@@ -1,0 +1,32 @@
+{
+  "project": {
+    "title": "Máquina do Tempo",
+    "subtitle": "Gabriel & Júlia",
+    "relationshipStart": "2024-03-24",
+    "weddingDate": "2027-07-24",
+    "finalMessage": "[...]"
+  },
+  "memories": [
+    {
+      "id": "viagem",
+      "date": "2025-11-06",
+      "title": "Nossa Viagem Favorita",
+      "text": "Ubatuba, nossa viagem favorita, momentos incriveis que so de lembrar ja sinto saudades, que venham muito mais viagens!",
+      "songs": ["spotify:track:4UChhDCTtneR0QXN0btEmz", "spotify:track:5kV7zUqQqd8rvYX82GoWCg", "spotify:track:4P9Q0GojKVXpRTJCaL3kyy"]
+    },
+    {
+      "id": "aniversarios",
+      "date": "2026-10-10",
+      "title": "Aniversários",
+      "text": "E, por fim, relembrando seus aniversarios que eu estive ao seu lado, você é a pessoa que mias gosta do proprio aniversário, e estar sempre do seu lado nessa data tão importante é com certeza um dos maiores prazeres dessa vida",
+      "songs": ["spotify:track:4yNk9iz9WVJikRFle3XEvn", "spotify:track:4rHZZAmHpZrA3iH5zx8frV", "spotify:track:1zI3RU0boCVsAXChjCvESu"]
+    },
+    {
+      "id": "pedido-de-casamento",
+      "date": "2026-03-22",
+      "title": "[Pedido de Casamento]",
+      "text": "O dia mais importante de nossas vidas!(por enquanto) o tão esperado pedido de casamento, como é bom relembrar esse momento!",
+      "songs": ["spotify:track:4aWvRjHweMAoB1RzUcXUUu", "spotify:track:4vYGUUbIubTOupFsDsV4Ct","spotify:track:1zkyqVdTsZFYg1SkfgUNcI" ]
+    }
+  ]
+}
