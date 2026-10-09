@@ -1,0 +1,12 @@
+{
+  "questions": [
+    {
+      "id": "nova-lembranca",
+      "question": "Sua pergunta sobre uma nova lembrança?",
+      "options": ["Resposta certa", "Outra resposta", "Mais uma resposta"],
+      "answer": "Resposta certa",
+      "title": "Título da lembrança revelada",
+      "text": "Escreva aqui o relato que aparece depois da resposta."
+    }
+  ]
+}

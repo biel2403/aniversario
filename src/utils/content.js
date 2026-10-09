@@ -4,8 +4,8 @@ export const TRACK_URI = /^spotify:track:[A-Za-z0-9]{22}$/;
 const IMAGE_FILE = /\.(jpe?g|png|webp|gif)$/i;
 const naturalSort = new Intl.Collator('pt-BR', { numeric: true, sensitivity: 'base' });
 
-export function discoverPhotos(files, memoryId) {
-  const prefix = `/content/memories/${memoryId}/`;
+export function discoverPhotos(files, memoryId, root = '/content/memories') {
+  const prefix = `${root}/${memoryId}/`;
   return Object.entries(files)
     .filter(([path]) => path.startsWith(prefix) && !path.slice(prefix.length).includes('/') && IMAGE_FILE.test(path))
     .sort(([a], [b]) => naturalSort.compare(a, b))

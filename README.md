@@ -177,6 +177,6 @@ As animações respeitam `prefers-reduced-motion`. Modais têm foco contido, fec
 ### Carta, jogo de lembranças e playlist completa
 
 - A carta fica no encerramento. Toque no envelope para abrir; os parágrafos aparecem aos poucos. Edite `project.finalMessage` em `content/timeline.json`; separe os parágrafos com `\n\n`. O texto foi deixado como `...` a pedido do Gabriel.
-- “Você lembra?” monta perguntas a partir das datas e títulos reais das memórias. Ao acertar ou escolher “Revelar lembrança”, mostra as fotos e o relato daquele momento. Datas iguais não viram perguntas para evitar duas respostas corretas. As memórias continuam acessíveis na história.
+- “Você lembra?” usa conteúdo independente em `content/voce-lembra.json` e fotos em `content/voce-lembra/ID/`. Está vazio, pronto para receber outras lembranças. Copie o modelo de `content/voce-lembra.exemplo.json` e siga `content/voce-lembra/COMO-EDITAR.md`. Ao acertar ou escolher “Revelar lembrança”, mostra as fotos e o relato da pergunta.
 - Na página Playlist, “Este momento” salva a memória selecionada e “A história inteira” reúne todas as músicas, na ordem da linha do tempo, sem faixas repetidas. O botão do encerramento abre a playlist completa. A escolha fica guardada durante a autorização do Spotify.
 - Playlists maiores são enviadas em lotes de até 100 faixas. Se o envio parar depois de criar, a nova tentativa usa a mesma playlist e recomeça o preenchimento para evitar duplicações.

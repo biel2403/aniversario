@@ -1830,3 +1830,5 @@ input[type=range]:disabled {
 @media(prefers-reduced-motion:reduce) {
   .remember-progress-track>span,.remember-option { transition:none }
 }
+.remember-empty { min-height:250px; display:flex; flex-direction:column; justify-content:center; gap:24px; color:var(--olive-light) }
+.remember-empty h3 { font:300 36px/1.2 var(--display); color:var(--text) }
