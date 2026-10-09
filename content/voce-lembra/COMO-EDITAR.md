@@ -4,7 +4,7 @@ Este jogo é separado da linha do tempo. Ele não usa content/timeline.json nem 
 
 ## 1. Escreva a primeira pergunta
 
-Abra content/voce-lembra.json. Ele começa vazio:
+Abra content/voce-lembra.json. Ele já contém as três perguntas enviadas pelo Gabriel. Para começar do zero, use:
 
 ```json
 {
@@ -44,3 +44,14 @@ Salve o arquivo e confira o site local. npm run check:content aponta problemas c
 Depois envie o JSON e as novas fotos em um commit para a branch main do repositório. A Vercel publicará a atualização automaticamente.
 
 Para esvaziar o jogo de novo, volte a usar {"questions":[]}. A seção fica sem perguntas até você adicionar seu conteúdo.
+## Perguntas já cadastradas: coloque as fotos nestas pastas
+
+| Lembrança | Data informada | Pasta |
+|---|---|---|
+| Primeiro Natal juntos | 25/12/2024 | content/voce-lembra/primeiro-natal/ |
+| Compramos o apartamento | 25/05/2025 | content/voce-lembra/compra-do-apartamento/ |
+| Primeiro aniversário de namoro | 22/03/2025 | content/voce-lembra/primeiro-aniversario-namoro/ |
+
+As pastas já estão criadas. Coloque os arquivos diretamente nelas, com nomes como 01.jpg, 02.jpg ou 03.gif. As datas foram mantidas exatamente como informadas. As perguntas e respostas já estão configuradas.
+
+Depois de colocar as fotos, envie-as ao GitHub em um novo commit para aparecerem no site publicado.

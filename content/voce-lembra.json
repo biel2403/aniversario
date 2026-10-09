@@ -1,3 +1,28 @@
 {
-  "questions": []
+  "questions": [
+    {
+      "id": "primeiro-natal",
+      "question": "Em que dia foi o nosso primeiro Natal juntos?",
+      "options": ["22/03/2025", "25/12/2024", "25/05/2025"],
+      "answer": "25/12/2024",
+      "title": "Primeiro Natal juntos",
+      "text": "25 de dezembro de 2024 — nosso primeiro Natal juntos."
+    },
+    {
+      "id": "compra-do-apartamento",
+      "question": "Você lembra em que dia compramos o nosso apartamento?",
+      "options": ["25/12/2024", "22/03/2025", "25/05/2025"],
+      "answer": "25/05/2025",
+      "title": "Compramos o apartamento",
+      "text": "25 de maio de 2025 — o dia em que compramos o nosso apartamento."
+    },
+    {
+      "id": "primeiro-aniversario-namoro",
+      "question": "Em que dia foi o nosso primeiro aniversário de namoro?",
+      "options": ["22/03/2025", "25/05/2025", "25/12/2024"],
+      "answer": "22/03/2025",
+      "title": "Primeiro aniversário de namoro",
+      "text": "22 de março de 2025 — nosso primeiro aniversário de namoro."
+    }
+  ]
 }
