@@ -18,7 +18,7 @@ export function clearSavedPlaylists() { try { sessionStorage.removeItem(KEY); } 
 // Called only by the explicit save button. Checkpoints are scoped to the Spotify owner.
 export async function savePlaylist({ name, uris, isPublic = true }) {
   name = name?.trim();
-  if (!name || name.length > 100 || !Array.isArray(uris) || !uris.length || uris.length > 3 || !uris.every((uri) => TRACK_URI.test(uri))) {
+  if (!name || name.length > 100 || !Array.isArray(uris) || !uris.length || !uris.every((uri) => TRACK_URI.test(uri))) {
     throw new SpotifyError('Escolha uma trilha e dê um nome à playlist antes de salvar.', 'invalid-playlist');
   }
   if (!hasPlaylistPermission(isPublic)) throw new SpotifyError('Autorize o Spotify a salvar playlists na sua conta.', 'playlist-permission');
@@ -47,8 +47,12 @@ export async function savePlaylist({ name, uris, isPublic = true }) {
       checkpoint(key, saved);
     }
     try {
-      // PUT is idempotent: a retry fills the SAME newly created playlist without duplicating tracks.
-      await spotifyRequest(`/playlists/${encodeURIComponent(saved.id)}/items`, { method: 'PUT', body: JSON.stringify({ uris }) });
+      // Every retry replaces from the beginning, so even a failed append cannot duplicate songs.
+      const path = `/playlists/${encodeURIComponent(saved.id)}/items`;
+      await spotifyRequest(path, { method: 'PUT', body: JSON.stringify({ uris: uris.slice(0, 100) }) });
+      for (let offset = 100; offset < uris.length; offset += 100) {
+        await spotifyRequest(path, { method: 'POST', body: JSON.stringify({ uris: uris.slice(offset, offset + 100) }) });
+      }
     } catch (error) {
       if (error.code === 'authentication') throw error;
       throw new SpotifyError(`A playlist foi criada, mas as músicas ainda não foram confirmadas. ${error.status === 429 ? error.message : 'Tente novamente para concluir a mesma playlist.'}`, 'playlist-incomplete', error.status);

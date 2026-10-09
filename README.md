@@ -173,3 +173,10 @@ As regras de conteúdo são independentes dos componentes, permitindo um futuro 
 O contador de relacionamento usa o calendário de **America/Sao_Paulo**, considerando anos bissextos e finais de mês. O countdown vira na **meia-noite de 24/07/2027 em São Paulo**; como o horário da cerimônia não foi informado, não presume outro horário. No dia, mostra “É hoje”; depois, “Um novo capítulo começou”.
 
 As animações respeitam `prefers-reduced-motion`. Modais têm foco contido, fechamento por Escape e retorno ao botão de origem. Imagens têm texto alternativo; controles têm nomes acessíveis. As fontes externas têm fallback local em Georgia e Arial. Não há analytics, backend ou banco de dados.
+
+### Carta, jogo de lembranças e playlist completa
+
+- A carta fica no encerramento. Toque no envelope para abrir; os parágrafos aparecem aos poucos. Edite `project.finalMessage` em `content/timeline.json`; separe os parágrafos com `\n\n`. O texto foi deixado como `...` a pedido do Gabriel.
+- “Você lembra?” monta perguntas a partir das datas e títulos reais das memórias. Ao acertar ou escolher “Revelar lembrança”, mostra as fotos e o relato daquele momento. Datas iguais não viram perguntas para evitar duas respostas corretas. As memórias continuam acessíveis na história.
+- Na página Playlist, “Este momento” salva a memória selecionada e “A história inteira” reúne todas as músicas, na ordem da linha do tempo, sem faixas repetidas. O botão do encerramento abre a playlist completa. A escolha fica guardada durante a autorização do Spotify.
+- Playlists maiores são enviadas em lotes de até 100 faixas. Se o envio parar depois de criar, a nova tentativa usa a mesma playlist e recomeça o preenchimento para evitar duplicações.

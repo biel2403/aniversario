@@ -131,3 +131,37 @@ test('renovação de token preserva escopos quando Spotify não os repete', asyn
   assert.equal(auth.hasPlaylistPermission(true), true);
   assert.equal(auth.hasPlaylistPermission(false), false);
 });
+
+test('salva a trilha completa com mais de três músicas', async () => {
+  const completeUris = Array.from({ length: 9 }, (_, index) => 'spotify:track:' + String(index).padStart(22, '0'));
+  globalThis.fetch = async (url, options) => {
+    if (url.endsWith('/me')) return json({ id: 'owner' });
+    if (url.endsWith('/me/playlists')) return json({ id: 'whole-story' }, 201);
+    assert.equal(options.method, 'PUT');
+    assert.deepEqual(JSON.parse(options.body).uris, completeUris);
+    return json({ snapshot_id: 'complete' });
+  };
+  assert.deepEqual((await savePlaylist({ ...input, uris: completeUris })).uris, completeUris);
+});
+
+test('mais de 100 faixas respeitam os lotes e retomam sem duplicar após uma resposta incerta', async () => {
+  const completeUris = Array.from({ length: 205 }, (_, index) => 'spotify:track:' + String(index).padStart(22, '0'));
+  let serverSongs = []; let created = 0; let failAppend = true;
+  globalThis.fetch = async (url, options) => {
+    if (url.endsWith('/me')) return json({ id: 'owner' });
+    if (url.endsWith('/me/playlists')) { created++; return json({ id: 'long-story' }, 201); }
+    const chunk = JSON.parse(options.body).uris;
+    assert.ok(chunk.length <= 100);
+    if (options.method === 'PUT') serverSongs = [...chunk];
+    else {
+      assert.equal(options.method, 'POST');
+      serverSongs.push(...chunk);
+      if (failAppend) { failAppend = false; throw new TypeError('Server applied write but response was lost'); }
+    }
+    return json({ snapshot_id: 'complete' });
+  };
+  await assert.rejects(savePlaylist({ ...input, uris: completeUris }), /mesma playlist/);
+  const result = await savePlaylist({ ...input, uris: completeUris });
+  assert.equal(result.complete, true); assert.equal(created, 1);
+  assert.deepEqual(serverSongs, completeUris);
+});

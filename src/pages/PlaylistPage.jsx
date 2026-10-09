@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { m } from 'framer-motion';
 import { useSpotifyConnection } from '../hooks/SpotifyContext';
 import { getTrack, spotifyRequest } from '../services/spotifyApi.js';
@@ -7,14 +7,19 @@ import { savePlaylist } from '../services/spotifyPlaylist.js';
 import { trackTime } from '../utils/dates';
 import Icon from '../components/Icon';
 
+import { memories } from '../data/story';
+import { collectStorySongs } from '../utils/storyExtras';
 const DEFAULT_NAME = 'Máquina do Tempo — Gabriel & Júlia';
 function readDraft() {
   try { return JSON.parse(sessionStorage.getItem('g-j.spotify.playlist-draft') || 'null'); } catch { return null; }
 }
 
-export default function PlaylistPage({ onBack }) {
+export default function PlaylistPage({ onBack, initialScope }) {
   const spotify = useSpotifyConnection();
-  const playlist = spotify.currentPlaylist;
+  const [scope, setScope] = useState(() => initialScope || (readDraft()?.scope === 'all' || !spotify.currentPlaylist ? 'all' : 'moment'));
+  const wholeStory = useMemo(() => ({ title: 'A trilha completa da nossa história', uris: collectStorySongs(memories) }), []);
+  const playlist = scope === 'all' ? wholeStory : spotify.currentPlaylist;
+  useEffect(() => { if (initialScope) setScope(initialScope); }, [initialScope]);
   const [name, setName] = useState(() => readDraft()?.name || DEFAULT_NAME);
   const [isPublic, setIsPublic] = useState(() => readDraft()?.isPublic !== false);
   const [tracks, setTracks] = useState({});
@@ -30,9 +35,9 @@ export default function PlaylistPage({ onBack }) {
   const allowed = spotify.authenticated && hasPlaylistPermission(isPublic);
 
   useEffect(() => {
-    try { sessionStorage.setItem('g-j.spotify.playlist-draft', JSON.stringify({ name, isPublic })); } catch { /* The form remains usable. */ }
+    try { sessionStorage.setItem('g-j.spotify.playlist-draft', JSON.stringify({ name, isPublic, scope })); } catch { /* The form remains usable. */ }
     setSaved(null); setError('');
-  }, [name, isPublic, playlist]);
+  }, [name, isPublic, scope, playlist]);
 
   useEffect(() => {
     if (!spotify.authenticated || !hasSongs) { setTracks({}); setOwner(''); return; }
@@ -68,11 +73,15 @@ export default function PlaylistPage({ onBack }) {
       <section className="save-playlist-intro" aria-labelledby="playlist-page-title">
         <p className="eyebrow">Para levar com você</p>
         <h1 id="playlist-page-title" tabIndex={-1}>A nossa história.<br /><em>Na sua playlist.</em></h1>
-        <p>Tem música que faz o tempo voltar. Guarde a trilha deste momento no seu Spotify e reencontre a gente sempre que apertar o play.</p>
+        <p>Tem música que faz o tempo voltar. Guarde as músicas de um momento ou a trilha completa no seu Spotify e reencontre a gente sempre que apertar o play.</p>
         <div className="playlist-art" aria-hidden="true"><div className="playlist-record"><span><Icon name="music" size={30} /></span></div><div className="playlist-art-caption"><small>Máquina do Tempo</small><strong>Gabriel & Júlia</strong></div></div>
       </section>
       <section className="save-playlist-card" aria-labelledby="save-playlist-heading">
-        <div className="save-playlist-card-heading"><Icon name="spotify" size={27} /><div><p className="eyebrow">A trilha deste momento</p><h2 id="save-playlist-heading">Um lugar para guardar.</h2></div></div>
+        <div className="save-playlist-card-heading"><Icon name="spotify" size={27} /><div><p className="eyebrow">{scope === 'all' ? 'Toda a nossa história' : 'A trilha deste momento'}</p><h2 id="save-playlist-heading">Um lugar para guardar.</h2></div></div>
+        <fieldset className="playlist-scope" disabled={saving}><legend>Quais músicas você quer guardar?</legend>
+          <label className={scope === 'moment' ? 'selected' : ''}><input type="radio" name="playlist-scope" value="moment" checked={scope === 'moment'} onChange={() => setScope('moment')} /><span><strong>Este momento</strong><small>{spotify.currentPlaylist ? `${spotify.currentPlaylist.uris.length} músicas da memória escolhida` : 'Escolha uma música na história'}</small></span></label>
+          <label className={scope === 'all' ? 'selected' : ''}><input type="radio" name="playlist-scope" value="all" checked={scope === 'all'} onChange={() => setScope('all')} /><span><strong>A história inteira</strong><small>{wholeStory.uris.length} músicas, sem repetir faixas</small></span></label>
+        </fieldset>
         {!hasSongs ? <div className="save-playlist-empty"><Icon name="music" size={32} /><h3>Ainda falta escolher uma trilha.</h3><p>Volte à história e toque uma música em uma memória. As músicas daquele momento vão aparecer aqui para você salvar.</p><button className="button primary" onClick={onBack}>Escolher uma trilha <Icon name="arrow" size={17} /></button></div> : <>
           {playlist.title && !playlist.title.startsWith('[') && <p className="save-playlist-memory">{playlist.title}</p>}
           <ol className="save-playlist-tracks" aria-label="Músicas que serão salvas" aria-busy={loading}>{playlist.uris.map((uri, index) => {

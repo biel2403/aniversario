@@ -1762,3 +1762,71 @@ input[type=range]:disabled {
   .carousel-previous { left: 7px; }
   .carousel-next { right: 7px; }
 }
+
+/* Interactive keepsakes */
+.remember-section { max-width:1120px; margin:0 auto; padding:110px 42px; display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; align-items:start; scroll-margin-top:100px }
+.remember-intro h2 { font-size:clamp(60px,7vw,96px); margin:22px 0 28px }
+.remember-intro>p:last-child { color:var(--muted); max-width:290px; font-size:14px; line-height:1.9 }
+.remember-card { padding:34px; border:1px solid var(--line); border-radius:28px; background:var(--surface); min-width:0 }
+.remember-progress { display:flex; justify-content:space-between; gap:16px; color:var(--muted); font-size:11px }
+.remember-progress-track { height:3px; background:var(--line); border-radius:5px; margin:16px 0 34px; overflow:hidden }
+.remember-progress-track>span { display:block; width:100%; height:100%; background:var(--olive); transform-origin:left; transition:transform .4s ease }
+.remember-question { font-family:var(--display); font-size:clamp(27px,3vw,35px); line-height:1.25; margin-bottom:27px; outline-offset:8px }
+.remember-options { display:grid; gap:10px }
+.remember-option { display:flex; gap:15px; align-items:center; padding:18px; text-align:left; border:1px solid var(--line); border-radius:16px; font-size:13px; transition:background .25s,border-color .25s }
+.remember-option>span { color:var(--muted); font-size:10px; font-variant-numeric:tabular-nums }
+.remember-option>svg { margin-left:auto }
+.remember-option:hover:not(:disabled) { background:rgba(150,158,113,.09); border-color:var(--olive) }
+.remember-option.is-correct { color:var(--olive-light); border-color:var(--olive); background:rgba(150,158,113,.12); opacity:1 }
+.remember-option.is-mistaken { border-color:var(--warm) }
+.remember-feedback { font-size:12px; color:var(--muted); margin:20px 0 12px; min-height:38px }
+.remember-card .text-button { font-size:12px }
+.remember-reveal { margin-top:28px; padding-top:25px; border-top:1px solid var(--line) }
+.remember-reveal .photo-carousel { width:100%; margin:0 }
+.remember-story { margin:24px 0 }
+.remember-story h4 { margin:0 0 10px; font:300 30px/1.2 var(--display) }
+.remember-story p { font-size:13px; color:var(--muted); line-height:1.9; white-space:pre-line }
+.remember-reveal>.button { width:100%; justify-content:space-between; font-size:12px }
+.remember-finished h3 { font:300 42px/1.1 var(--display); margin:25px 0 }
+.remember-finished p { color:var(--muted); font-size:14px; margin-bottom:30px }
+.letter-wrap { width:min(100%,630px); margin:65px auto 0 }
+.letter-envelope { width:min(100%,440px); height:260px; display:block; position:relative; margin:0 auto 35px; perspective:1000px; isolation:isolate; border-radius:20px; background:#606c38; box-shadow:0 18px 45px rgba(0,0,0,.16); text-align:center }
+.envelope-paper { position:absolute; inset:20px 25px 10px; display:flex; flex-direction:column; gap:10px; align-items:center; padding-top:35px; color:#394126; border-radius:16px; background:#e8dcc7; font:300 26px var(--display) }
+.envelope-paper>span:last-child { font:12px var(--body); color:#606c38 }
+.envelope-fold { position:absolute; inset:0; z-index:2; background:#7b8653; clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%); border-radius:20px }
+.envelope-fold::after { content:''; position:absolute; inset:0; background:#8a9462; clip-path:polygon(0 100%,50% 45%,100% 100%) }
+.envelope-flap { position:absolute; inset:0; z-index:3; background:#969e71; clip-path:polygon(0 0,100% 0,50% 58%); transform-origin:top; backface-visibility:hidden; border-radius:20px 20px 0 0 }
+.envelope-seal { position:absolute; top:47%; left:50%; transform:translate(-50%,-50%); z-index:4; display:grid; place-items:center; width:54px; height:54px; color:#e8dcc7; background:#606c38; border:1px solid rgba(232,220,199,.3); border-radius:50%; box-shadow:0 3px 10px rgba(0,0,0,.15) }
+.envelope-instruction { position:absolute; bottom:20px; inset-inline:0; z-index:5; font-size:11px; letter-spacing:.06em; color:#e8dcc7 }
+.personal-letter { position:relative; padding:45px 42px 32px; background:#e8dcc7; border-radius:24px; color:#394126; text-align:left; box-shadow:0 18px 45px rgba(0,0,0,.13) }
+.letter-date { font-size:10px; color:#606c38; letter-spacing:.09em; margin-bottom:25px }
+.personal-letter h3 { font:300 40px/1.1 var(--display); margin-bottom:30px }
+.personal-letter .personal-message { margin:0; max-width:none; color:#394126; font-size:16px; line-height:2; white-space:pre-line; overflow-wrap:anywhere }
+.personal-letter .personal-message p+p { margin-top:20px }
+.personal-letter .signature { color:#606c38; margin-top:30px }
+.letter-close { color:#606c38; font-size:11px; margin-top:28px }
+.closing-actions { display:flex; flex-direction:column; align-items:center; gap:28px; margin-top:48px }
+.closing-actions .restart-button { margin:0 }
+.closing-actions .button { font-size:12px; gap:15px }
+.playlist-scope { border:0; padding:0; margin:28px 0; min-width:0; display:grid; gap:10px }
+.playlist-scope legend { padding:0; font-size:12px; margin-bottom:14px; color:var(--muted) }
+.playlist-scope label { display:flex; gap:13px; align-items:center; border:1px solid var(--line); padding:16px; border-radius:16px; cursor:pointer; text-align:left }
+.playlist-scope label.selected { border-color:var(--olive); background:rgba(150,158,113,.09) }
+.playlist-scope input { accent-color:var(--olive-light); width:17px; height:17px; flex-shrink:0 }
+.playlist-scope strong { display:block; font-size:13px; font-weight:500 }
+.playlist-scope small { display:block; font-size:11px; color:var(--muted); margin-top:4px }
+.playlist-scope:disabled label { cursor:wait; opacity:.6 }
+@media(max-width:760px) {
+  .remember-section { grid-template-columns:1fr; gap:32px; padding:80px 24px }
+  .remember-intro h2 { font-size:68px; margin:18px 0 }
+  .remember-intro>p:last-child { max-width:360px }
+  .remember-card { padding:24px }
+  .letter-wrap { margin-top:55px }
+  .letter-envelope { height:220px }
+  .personal-letter { padding:32px 24px }
+  .personal-letter h3 { font-size:34px }
+  .personal-letter .personal-message { font-size:14px }
+}
+@media(prefers-reduced-motion:reduce) {
+  .remember-progress-track>span,.remember-option { transition:none }
+}
